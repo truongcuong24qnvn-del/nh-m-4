@@ -1,0 +1,88 @@
+1. Cường — Giao diện chương trình
+Mục tiêu: Làm giao diện để nhân viên đăng nhập, theo dõi bãi xe và thao tác với các chức năng quản lý.
+
+Công việc cần làm:
+1. Tạo cửa sổ chính bằng Tkinter, đặt tiêu đề, kích thước và bố cục thống nhất.
+2. Thiết kế màn hình đăng nhập, gồm ô tài khoản, mật khẩu và thông báo khi đăng nhập sai.
+3. Tạo thanh điều hướng hoặc các tab chức năng:
+   - Tổng quan bãi xe.
+   - Ô đỗ.
+   - Phương tiện.
+   - Lượt gửi xe.
+   - Báo cáo.
+   - Phản hồi khách hàng.
+   - Cài đặt.
+4. Làm màn hình tổng quan hiển thị tổng số ô, số ô trống, số ô đang sử dụng, số phương tiện và doanh thu.
+5. Hiển thị danh sách ô đỗ, biển số và trạng thái bằng bảng dễ đọc.
+6. Tạo biểu mẫu nhập và chỉnh sửa thông tin phương tiện, khách hàng hoặc phản hồi.
+7. Thêm nút thao tác như Thêm, Sửa, Xóa, Tìm kiếm, Làm mới, Xuất báo cáo.
+8. Hiển thị thông báo xác nhận trước thao tác xóa hoặc hoàn tất gửi xe.
+9. Kiểm tra giao diện ở kích thước cửa sổ sử dụng thực tế; căn chỉnh tiêu đề, bảng, nút và khoảng cách.
+10. Kết nối các nút giao diện với hàm xử lý do Tuấn cung cấp; không tự viết trùng nghiệp vụ hoặc đọc JSON trực tiếp trong giao diện.
+Tệp bàn giao: ui.py
+
+Bàn giao khi:
+- Các màn hình chính đã xuất hiện đầy đủ, chữ có dấu và không bị tràn.
+- Các nút có hành động hoặc được nối tới đúng hàm xử lý.
+- Ghi rõ dữ liệu đầu vào và kết quả mà từng chức năng cần nhận/trả cho Tuấn.
+- Gửi hướng dẫn khởi chạy màn hình hoặc ảnh chụp các màn hình chính.
+2. Thư — Cấu trúc dữ liệu và lưu trữ JSON
+Mục tiêu: Xác định dữ liệu chương trình cần dùng và bảo đảm dữ liệu được đọc, ghi, sao lưu đúng định dạng.
+
+Công việc cần làm:
+1. Đọc các yêu cầu của đề tài và thống nhất những loại dữ liệu cần lưu:
+   - Ô đỗ và loại xe phù hợp.
+   - Phương tiện và biển số.
+   - Lượt gửi xe, thời gian vào/ra và phí.
+   - Tài khoản, vai trò người dùng.
+   - Phản hồi của khách hàng.
+   - Tỷ giá ngoại tệ nếu có chức năng quy đổi.
+2. Khai báo tên ứng dụng, đường dẫn thư mục dữ liệu, tên các tệp JSON và mức phí mặc định trong config.py.
+3. Tạo hoặc hoàn thiện lớp/mẫu dữ liệu trong models.py, thống nhất tên trường, kiểu dữ liệu và giá trị trạng thái.
+4. Viết các hàm đọc và ghi JSON trong storage.py.
+5. Xử lý trường hợp tệp JSON chưa tồn tại, rỗng hoặc nội dung không hợp lệ để chương trình có thể khởi tạo dữ liệu mẫu hoặc báo lỗi phù hợp.
+6. Bảo đảm dữ liệu được lưu lại sau khi thêm, sửa hoặc xóa; mở lại chương trình vẫn đọc được dữ liệu mới.
+7. Viết chức năng sao lưu và khôi phục dữ liệu nếu được phân công trong phiên bản hiện tại.
+8. Chuẩn bị bộ dữ liệu giả định hợp lý để trình diễn: nhiều ô đỗ, một số xe đang gửi, vài lượt đã hoàn tất và một số phản hồi.
+9. Ghi rõ cấu trúc của từng tệp JSON và cách đặt tên các trường để các thành viên khác dùng thống nhất.
+10. Phối hợp với Tuấn để kiểm tra các hàm nghiệp vụ có thể lưu và đọc dữ liệu qua storage.py.
+Tệp bàn giao: config.py, models.py, storage.py và thư mục dữ liệu JSON.
+
+Bàn giao khi:
+- Có ví dụ JSON đúng định dạng cho từng nhóm dữ liệu.
+- Chương trình đọc được dữ liệu ban đầu và ghi được thay đổi.
+- Có ghi chú mô tả các trường dữ liệu và giá trị trạng thái.
+- Báo cho Cường và Tuấn biết tên hàm đọc/ghi dữ liệu cùng cách gọi.
+3. Tuấn — Nghiệp vụ và tích hợp chương trình
+Mục tiêu: Xây dựng quy tắc hoạt động của bãi xe, kết nối giao diện với dữ liệu và bảo đảm chương trình khởi chạy được.
+
+Công việc cần làm:
+1. Viết các hàm nghiệp vụ trong services.py để:
+   - Tìm ô đỗ còn trống phù hợp với loại xe.
+   - Nhận xe vào bãi và tạo lượt gửi xe.
+   - Tìm lượt gửi theo biển số hoặc mã lượt.
+   - Tính phí dựa trên thời gian gửi và mức phí đã thống nhất.
+   - Hoàn tất lượt gửi khi xe ra, cập nhật trạng thái ô đỗ.
+2. Viết chức năng quản lý phương tiện: thêm, sửa, xóa, tìm kiếm và kiểm tra biển số bị trùng.
+3. Tính số liệu tổng quan và doanh thu để giao diện của Cường hiển thị.
+4. Viết chức năng lọc lượt gửi theo ngày, trạng thái hoặc biển số để hỗ trợ báo cáo.
+5. Kết nối chức năng gửi phản hồi của khách hàng với dữ liệu do Thư thiết kế.
+6. Nếu có phần tỷ giá ngoại tệ, gọi API lấy tỷ giá, xử lý khi không có mạng và cung cấp kết quả quy đổi cho báo cáo. Không để lỗi API làm dừng chức năng quản lý bãi xe.
+7. Kiểm tra quyền thao tác theo tài khoản hoặc vai trò nếu chức năng đăng nhập có trong phạm vi đồ án.
+8. Viết main.py để khởi tạo ứng dụng, nạp cấu hình và dữ liệu, rồi mở giao diện.
+9. Kết nối các nút trong ui.py với hàm trong services.py thông qua thống nhất với Cường.
+10. Tích hợp các tệp của cả nhóm, xử lý lỗi kết nối và ghi hướng dẫn cài đặt/chạy chương trình.
+Tệp bàn giao: services.py, main.py và hướng dẫn chạy chương trình.
+
+Bàn giao khi:
+- Có thể đăng nhập và mở màn hình chính.
+- Nhận xe vào bãi, tính phí khi xe ra và cập nhật trạng thái ô đỗ chính xác.
+- Các thay đổi được lưu qua lớp lưu trữ JSON.
+- Báo cáo lấy đúng số liệu từ dữ liệu hiện có.
+- Có hướng dẫn chạy chương trình và tài khoản mẫu nếu chương trình dùng đăng nhập.
+Thứ tự phối hợp và bàn giao
+1. Thư thống nhất cấu trúc dữ liệu, trạng thái và các hàm đọc/ghi JSON trước.
+2. Tuấn dùng cấu trúc đó để viết nghiệp vụ và thông báo cho Cường tên hàm cần gọi.
+3. Cường hoàn thiện giao diện và nối các nút tới những hàm đã thống nhất.
+4. Cả nhóm chạy thử các luồng chính: đăng nhập, xem ô trống, nhận xe, xe ra và tính phí, xem báo cáo, gửi phản hồi.
+5. Mỗi người bàn giao tệp nguồn, mô tả phần đã làm và các lỗi còn tồn tại cho nhóm trưởng trước khi đóng gói.
